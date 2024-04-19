@@ -6,7 +6,7 @@ async function getUser (req, res) {
     userModel.find ()
     .then(userDoc =>{
         console.log('this is the user', userDoc)
-        res.status(200).json(userDoc)
+        res.status(200).json(userDoc[0])
     })
     .catch(error => {
         console.log('Error while getting user', error)

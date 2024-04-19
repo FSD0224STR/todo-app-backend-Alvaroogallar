@@ -9,7 +9,7 @@ router.get ('/:id', getTaskById)
 router.post('', createTask)
 router.delete ('/:id', deleteTask)
 router.put ('/:id', updateTask)
-router.patch ('/:id', middlewarePatch, doneTask)
+router.patch ('/:id?', middlewarePatch, doneTask)
 
 
 module.exports = router

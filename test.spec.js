@@ -14,12 +14,7 @@ describe("GET /user endpoint", () => {
             .then((response) => {
                 // Check if the response body matches the expected user information
                 expect(response.body).toHaveProperty("_id"); // Check if ID is present in the response
-                currentUser =  {
-                    "_id": "661ead7c72c90463ab708c99",
-                    "email": "alvaro@email.com",
-                    "firstname": "Álvaro",
-                    "lastname": "Ogállar Boiso"
-                };
+                currentUser =  response.body;
                 console.log('current User', currentUser)
                 expect(response.body).toHaveProperty("firstname");
                 expect(response.body).toHaveProperty("lastname");
@@ -37,7 +32,7 @@ describe("POST /tasks/", () => {
             title: "New Task Title",
             description: "New Task Description",
             dueDate: "2023-12-31", // Example date, adjust as necessary
-            user: '661ead7c72c90463ab708c99',
+            user: currentUser._id,
         };
 
         await request(app)
@@ -318,8 +313,8 @@ describe("POST /user/login", () => {
     test("successfully logs in a user with correct credentials", async () => {
         console.log("CURRENTUSER", currentUser);
         const userData = {
-            email: 'alvaro@email.com',
-            password: 'alvaro', // Assuming this is the correct password
+            email: currentUser.email,
+            password: currentUser.password, // Assuming this is the correct password
         };
 
         await request(app)
@@ -334,7 +329,7 @@ describe("POST /user/login", () => {
 
     test("returns a 403 status code when incorrect credentials are provided", async () => {
         const userData = {
-            email: 'alvaro@email.com',
+            email: currentUser.email,
             password: "wrongpassword", // This is the wrong password
         };
 
